@@ -116,6 +116,7 @@ function email_send( $p_from, $p_recipient, $p_subject, $p_message, $p_cc='',
       if ( !is_blank( config_get( 'smtp_username' ) ) ) {
         # Use SMTP Authentication
         $mail->SMTPAuth = true;
+        $mail->AuthType = 'PLAIN';
         $mail->Username = config_get( 'smtp_username' );
         $mail->Password = config_get( 'smtp_password' );
       }
