@@ -441,7 +441,7 @@ $g_smtp_port = getenv('SMTP_PORT') ?: 25;
  * @see https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting
  *      Opportunistic TLS
  */
-$g_SMTPAutoTLS = filter_var(getenv('SMTP_AUTOTLS') ?: false, FILTER_VALIDATE_BOOLEAN);
+$g_SMTPAutoTLS = false;
 
 // ----------------------------------------------------------------------------
 /* [User Authentication] */
