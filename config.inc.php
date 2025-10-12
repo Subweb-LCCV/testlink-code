@@ -225,7 +225,7 @@ $tlCfg->cookie->testProjectMemory = $tlCfg->cookie->prefix .
 // The value must be available in $$tlCfg->locales (see cfg/const.inc.php).
 // Note: An attempt will be done to establish the default locale
 // automatically using $_SERVER['HTTP_ACCEPT_LANGUAGE']
-$tlCfg->default_language = 'en_GB';
+$tlCfg->default_language = 'pt_BR';
 
 /**
  * @var string Charset 'UTF-8' is only officially supported charset (Require
@@ -396,12 +396,12 @@ $tlCfg->loggerFilter = null; // default defined on logger.class.php ;
  * Configure using custom_config.inc.php
  * @uses lib/functions/email_api.php
  */
-$g_smtp_host        = '[smtp_host_not_configured]';  # SMTP server MUST BE configured
+$g_smtp_host        = getenv('SMTP_HOST') ?: 'localhost';  # SMTP server MUST BE configured
 
 # Configure using custom_config.inc.php
-$g_tl_admin_email     = '[testlink_sysadmin_email_not_configured]'; # for problem/error notification
-$g_from_email         = '[from_email_not_configured]';  # email sender
-$g_return_path_email  = '[return_path_email_not_configured]';
+$g_tl_admin_email     = getenv('TL_ADMIN_EMAIL') ?: 'testlink_admin@example.com'; # for problem/error notification
+$g_from_email         = getenv('FROM_EMAIL') ?: 'noreply@example.com';  # email sender
+$g_return_path_email  = getenv('RETURN_PATH_EMAIL') ?: 'bounces@example.com';
 
 /**
  * Email notification priority (low by default)
@@ -419,29 +419,29 @@ $g_mail_priority = 5;
 $g_phpMailer_method = PHPMAILER_METHOD_SMTP;
 
 /** Configure only if SMTP server requires authentication */
-$g_smtp_username    = '';  # user
-$g_smtp_password    = '';  # password
+$g_smtp_username    = getenv('SMTP_USERNAME') ?: '';  # user
+$g_smtp_password    = getenv('SMTP_PASSWORD') ?: '';  # password
 
 /**
  * This control the connection mode to SMTP server. 
  * Can be '', 'ssl','tls'
  * @global string $g_smtp_connection_mode
  */
-$g_smtp_connection_mode = '';
+$g_smtp_connection_mode = getenv('SMTP_CONNECTION_MODE') ?: '';
 
 /**
  * The smtp port to use.  The typical SMTP ports are 25 and 587.  The port to use
  * will depend on the SMTP server configuration and hence others may be used.
  * @global int $g_smtp_port
  */
-$g_smtp_port = 25;                        
+$g_smtp_port = getenv('SMTP_PORT') ?: 25;                        
 
 
 /**
  * @see https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting
  *      Opportunistic TLS
  */
-$g_SMTPAutoTLS = false;
+$g_SMTPAutoTLS = filter_var(getenv('SMTP_AUTOTLS') ?: false, FILTER_VALIDATE_BOOLEAN);
 
 // ----------------------------------------------------------------------------
 /* [User Authentication] */
