@@ -119,6 +119,13 @@ function email_send( $p_from, $p_recipient, $p_subject, $p_message, $p_cc='',
         $mail->AuthType = 'LOGIN';
         $mail->Username = config_get( 'smtp_username' );
         $mail->Password = config_get( 'smtp_password' );
+        $mail->SMTPOptions = [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            ]
+        ];
       }
 
       if ( !is_blank( config_get( 'smtp_connection_mode' ) ) ) {
